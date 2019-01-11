@@ -7,10 +7,14 @@
     "start": "node .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "bin": {
+    "cidhook": "cmd.js"
+  },
   "author": "Chance Hudson",
   "license": "MIT",
   "dependencies": {
     "express": "^4.16.4",
-    "ipfs": "^0.33.1"
+    "ipfs": "^0.33.1",
+    "node-fetch": "^2.3.0"
   }
 }
