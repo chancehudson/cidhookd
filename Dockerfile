@@ -3,8 +3,13 @@ MAINTAINER Chance Hudson
 
 RUN apk add --no-cache nodejs nodejs-npm git python g++ make
 
-COPY . .
-
+COPY . /src
+WORKDIR /src
 RUN npm ci
 
-CMD ["npm", "start"]
+FROM alpine:latest
+
+RUN apk add --no-cache nodejs
+COPY --from=0 /src /src
+
+CMD ["node", "/src"]
