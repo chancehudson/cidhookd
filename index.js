@@ -6,23 +6,23 @@ const node = new IPFS();
 
 app.post('/:cid', async (req, res) => {
   try {
-    // Pin the path
+    console.log(`Pinning cid ${req.params.cid}`);
     await node.pin.add(req.params.cid, {
       recursive: true
     });
-    console.log(`Pinned cid ${req.params.cid}`);
-    res.status(200).end('{ "pinned": true }');
+    res.status(204).end();
   } catch (err) {
     res.end(err);
   }
 });
+
 app.delete('/:cid', async (req, res) => {
   try {
+    console.log(`Unpinning cid ${req.params.cid}`);
     await node.pin.rm(req.params.cid, {
       recursive: true
     });
-    console.log(`Unpinned cid ${req.params.cid}`);
-    res.status(200).end('{ "pinned": false }');
+    res.status(204).end();
   } catch (err) {
     res.end(err);
   }
