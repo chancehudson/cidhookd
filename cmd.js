@@ -15,7 +15,13 @@ fetch(`${domain}/${cid}`, {
   method
 })
   .then(res => {
-    if (res.status !== 204) throw new Error('Non-204 response received');
+    if (res.status !== 204) {
+      console.log(`Non-204 response received: ${res.status})`);
+      process.exit(1);
+    }
     console.log(`cid ${cid} successfully ${method === 'DELETE' ? 'un-' : ''}hooked`)
   })
-  .catch(err => console.log('Error', err));
+  .catch(err => {
+    console.log('Error', err);
+    process.exit(1);
+  );
