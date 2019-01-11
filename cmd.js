@@ -19,9 +19,9 @@ fetch(`${domain}/${cid}`, {
       console.log(`Non-204 response received: ${res.status})`);
       process.exit(1);
     }
-    console.log(`cid ${cid} successfully ${method === 'DELETE' ? 'un-' : ''}hooked`)
+    console.log(`cid ${cid} successfully ${method === 'DELETE' ? 'un-' : ''}pinned`)
   })
   .catch(err => {
     console.log('Error', err);
     process.exit(1);
-  );
+  });
