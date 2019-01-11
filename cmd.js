@@ -1,12 +1,18 @@
 #!/usr/bin/env node
 
 const fetch = require('node-fetch');
-const [ _, __, _domain, cid, method ] = process.argv;
+const [ _, __, _domain, cid, _method ] = process.argv;
+
+if (process.argv.length < 3) {
+  console.log('\nUsage: cidhook <url> <cid> [pin|unpin]\n');
+  process.exit(0);
+}
 
 const domain = _domain.indexOf('http') === 0 ? _domain : `https://${_domain}`;
+const method = _method === 'unpin' ? 'DELETE' : 'POST';
 
 fetch(`${domain}/${cid}`, {
-  method: method || 'POST'
+  method
 })
   .then(res => {
     if (res.status !== 204) throw new Error('Non-204 response received');
