@@ -11,7 +11,7 @@ app.post('/:cid', async (req, res) => {
       recursive: true
     });
     console.log(`Pinned cid ${req.params.cid}`);
-    res.status(204).end();
+    res.status(200).end('{ "pinned": true }');
   } catch (err) {
     res.end(err);
   }
@@ -22,7 +22,7 @@ app.delete('/:cid', async (req, res) => {
       recursive: true
     });
     console.log(`Unpinned cid ${req.params.cid}`);
-    res.status(204).end();
+    res.status(200).end('{ "pinned": false }');
   } catch (err) {
     res.end(err);
   }
