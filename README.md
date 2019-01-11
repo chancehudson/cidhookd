@@ -1,6 +1,6 @@
 # cidhook [![Build Status](https://travis-ci.org/JChanceHud/cidhook.svg?branch=master)](https://travis-ci.org/JChanceHud/cidhook) [![](https://img.shields.io/npm/v/cidhook.svg)](https://www.npmjs.com/package/cidhook)
 
-A simple web server that listens for IPFS cids to pin.
+A simple web server that listens for IPFS cids to pin via a tiny REST api.
 
 ## Install
 
@@ -8,16 +8,17 @@ Install with `npm install -g cidhook`
 
 ## Usage
 
-Running the `cidhook` command creates an http server on port 3000 listening for requests at `/:cid`.
+The docker image [`jchancehud/cidhook`](https://cloud.docker.com/u/jchancehud/repository/docker/jchancehud/cidhook) can be used as a server.
 
-### Pinning
+## API
 
-A `POST` request will pin the content:
+`cidhook` http servers have 2 endpoints:
 
-`curl -X POST http://localhost:3000/QmTga2UJ6BkZbCPyz8YL2Pucxpwoyx4t27PnTNULeCrx4y`
+- `/:cid` - `POST` - Pins the supplied IPFS cid
+- `/:cid` - `DELETE` - Unpins the supplied IPFS cid
 
-### Unpinning
+### CLI
 
-A `DELETE` request will unpin the content:
+The `cidhook` command can be used to interact with remote `cidhook` instances.
 
-`curl -X DELETE http://localhost:3000/QmTga2UJ6BkZbCPyz8YL2Pucxpwoyx4t27PnTNULeCrx4y`
+`cidhook <url> <cid> [pin|unpin]`
