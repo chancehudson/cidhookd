@@ -4,6 +4,17 @@ const app = express();
 const IPFS = require('ipfs');
 const node = new IPFS();
 
+const { CIDHOOK_SECRET } = process.env;
+
+app.use((req, res, next) => {
+  if (!CIDHOOK_SECRET) return next();
+  if (req.get('Authorization') !== CIDHOOK_SECRET) {
+    next(new Error('Invalid Authorization supplied'));
+  } else {
+    next();
+  }
+});
+
 app.post('/:cid', async (req, res) => {
   try {
     console.log(`Pinning cid ${req.params.cid}`);
