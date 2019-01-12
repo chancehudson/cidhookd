@@ -1,9 +1,18 @@
+const fs = require('fs');
 const express = require('express');
 const app = express();
 
 const IPFS = require('ipfs');
 const node = new IPFS();
 
+const { CIDHOOK_SECRET_PATH } = process.env;
+if (CIDHOOK_SECRET_PATH && !fs.existsSync(CIDHOOK_SECRET_PATH)) {
+  console.log(`Invalid CIDHOOK_SECRET_PATH supplied: ${CIDHOOK_SECRET_PATH}`);
+  process.exit(1);
+}
+if (CIDHOOK_SECRET_PATH && !process.env.CIDHOOK_SECRET) {
+  process.env.CIDHOOK_SECRET = fs.readFileSync(CIDHOOK_SECRET_PATH, 'utf8');
+}
 const { CIDHOOK_SECRET } = process.env;
 
 app.use((req, res, next) => {
