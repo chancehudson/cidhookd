@@ -12,7 +12,7 @@ app.post('/:cid', async (req, res) => {
     });
     res.status(204).end();
   } catch (err) {
-    res.end(err);
+    res.status(500).send(err.toString());
   }
 });
 
@@ -22,9 +22,9 @@ app.delete('/:cid', async (req, res) => {
     await node.pin.rm(req.params.cid, {
       recursive: true
     });
+  } catch (_) {
+  } finally {
     res.status(204).end();
-  } catch (err) {
-    res.end(err);
   }
 });
 
