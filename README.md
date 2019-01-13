@@ -1,4 +1,4 @@
-# cidhook [![Build Status](https://travis-ci.org/JChanceHud/cidhook.svg?branch=master)](https://travis-ci.org/JChanceHud/cidhook) [![](https://img.shields.io/npm/v/cidhook.svg)](https://www.npmjs.com/package/cidhook)
+# cidhookd [![Build Status](https://travis-ci.org/JChanceHud/cidhook.svg?branch=master)](https://travis-ci.org/JChanceHud/cidhook) [![](https://img.shields.io/npm/v/cidhook.svg)](https://www.npmjs.com/package/cidhook)
 
 A server for easily pinning IPFS cids from ephemeral IPFS nodes (like on CI, local machine, etc).
 
