@@ -13,7 +13,8 @@ if (CIDHOOK_SECRET_PATH && !fs.existsSync(CIDHOOK_SECRET_PATH)) {
   process.exit(1);
 }
 if (CIDHOOK_SECRET_PATH && !process.env.CIDHOOK_SECRET) {
-  process.env.CIDHOOK_SECRET = fs.readFileSync(CIDHOOK_SECRET_PATH, 'utf8');
+  const secret = fs.readFileSync(CIDHOOK_SECRET_PATH, 'utf8');
+  process.env.CIDHOOK_SECRET = secret.trim(secret);
 }
 const { CIDHOOK_SECRET } = process.env;
 
@@ -51,5 +52,5 @@ app.delete('/:cid', async (req, res) => {
 });
 
 node.on('ready', () => {
-  app.listen(3000, () => console.log(`cidhook listening on port 3000!`));
+  app.listen(3000, () => console.log(`cidhookd listening on port 3000!`));
 });
