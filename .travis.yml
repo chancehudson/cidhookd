@@ -6,10 +6,10 @@ services:
 language: node_js
 node_js:
   10
-  
+
 install: true
 
 script:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker build . -t jchancehud/cidhook:latest
-  - docker push jchancehud/cidhook:latest
+  - docker build . -t jchancehud/cidhookd:latest
+  - docker push jchancehud/cidhookd:latest
