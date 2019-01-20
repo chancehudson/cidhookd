@@ -4,8 +4,12 @@ const fs = require('fs');
 const express = require('express');
 const app = express();
 
-const IPFS = require('ipfs');
-const node = new IPFS();
+const ipfsClient = require('ipfs-http-client');
+const ipfs = ipfsClient({
+  host: process.env.IPFS_HOST || 'localhost',
+  port: process.env.IPFS_PORT || '5001',
+  protocol: process.env.IPFS_PROTOCOL || 'http
+});
 
 const { CIDHOOK_SECRET_PATH } = process.env;
 if (CIDHOOK_SECRET_PATH && !fs.existsSync(CIDHOOK_SECRET_PATH)) {
@@ -30,7 +34,7 @@ app.use((req, res, next) => {
 app.post('/:cid', async (req, res) => {
   try {
     console.log(`Pinning cid ${req.params.cid}`);
-    await node.pin.add(req.params.cid, {
+    await ipfs.pin.add(req.params.cid, {
       recursive: true
     });
     res.status(204).end();
@@ -42,7 +46,7 @@ app.post('/:cid', async (req, res) => {
 app.delete('/:cid', async (req, res) => {
   try {
     console.log(`Unpinning cid ${req.params.cid}`);
-    await node.pin.rm(req.params.cid, {
+    await ipfs.pin.rm(req.params.cid, {
       recursive: true
     });
   } catch (_) {
@@ -51,6 +55,4 @@ app.delete('/:cid', async (req, res) => {
   }
 });
 
-node.on('ready', () => {
-  app.listen(3000, () => console.log(`cidhookd listening on port 3000!`));
-});
+app.listen(3000, () => console.log(`cidhookd listening on port 3000!`));
