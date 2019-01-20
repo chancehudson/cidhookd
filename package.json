@@ -1,6 +1,6 @@
 {
   "name": "cidhookd",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A webhook server for pinning ipfs cids",
   "main": "index.js",
   "scripts": {
