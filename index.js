@@ -8,7 +8,7 @@ const ipfsClient = require('ipfs-http-client');
 const ipfs = ipfsClient({
   host: process.env.IPFS_HOST || 'localhost',
   port: process.env.IPFS_PORT || '5001',
-  protocol: process.env.IPFS_PROTOCOL || 'http
+  protocol: process.env.IPFS_PROTOCOL || 'http'
 });
 
 const { CIDHOOK_SECRET_PATH } = process.env;
