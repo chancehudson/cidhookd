@@ -24,8 +24,9 @@ const { CIDHOOK_SECRET } = process.env;
 
 app.use((req, res, next) => {
   if (!CIDHOOK_SECRET) return next();
-  if (req.get('Authorization') !== CIDHOOK_SECRET) {
-    next(new Error('Invalid Authorization supplied'));
+  const auth = req.get('Authorization');
+  if (auth !== CIDHOOK_SECRET) {
+    next(new Error(`Invalid Authorization supplied: ${auth}`));
   } else {
     next();
   }
