@@ -1,4 +1,3 @@
-# Stage 0
 FROM golang:1.11.1-alpine3.8
 MAINTAINER Chance Hudson
 
@@ -18,24 +17,20 @@ RUN git clone --branch $IPFS_TAG https://github.com/ipfs/go-ipfs.git $SRC_DIR \
   && cd $SRC_DIR \
   && make build
 
-# Stage 1
 FROM alpine:3.8
-MAINTAINER Chance Hudson
 
-RUN apk add --no-cache nodejs nodejs-npm git python g++ make
+RUN apk add --no-cache nodejs-npm git python g++ make && \
+  npm config set unsafe-perm true && \
+  npm install -g ipfs
 
 COPY . /src
 WORKDIR /src
-RUN npm ci
 
-# Stage 2
-FROM alpine:3.8
+RUN npm ci && \
+  apk del --no-cache git python g++ make
 
 ENV SRC_DIR /go/src/github.com/ipfs/go-ipfs
 COPY --from=0 $SRC_DIR/cmd/ipfs/ipfs /usr/local/bin/ipfs
-
-RUN apk add --no-cache nodejs bash
-COPY --from=1 /src /src
 
 COPY ./daemon.sh /daemon.sh
 
