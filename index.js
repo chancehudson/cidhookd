@@ -22,6 +22,7 @@ app.use((req, res, next) => {
   if (!CIDHOOK_SECRET) return next();
   const auth = req.get('Authorization');
   if (auth !== CIDHOOK_SECRET) {
+    res.statusCode = 401;
     next(new Error(`Invalid Authorization supplied: ${auth}`));
   } else {
     next();
