@@ -4,6 +4,9 @@ const fs = require('fs');
 const express = require('express');
 const app = express();
 
+const ipfsClient = require('ipfs-http-client');
+const goIPFS = ipfsClient('localhost', '5001', { protocol: 'http' });
+
 const IPFS = require('ipfs');
 const node = new IPFS();
 
@@ -35,6 +38,9 @@ app.post('/:cid', async (req, res) => {
     await node.pin.add(req.params.cid, {
       recursive: true
     });
+    await goIPFS.pin.add(req.params.cid, {
+      recursive: true
+    });
     res.status(204).end();
   } catch (err) {
     res.status(500).send(err.toString());
@@ -45,6 +51,9 @@ app.delete('/:cid', async (req, res) => {
   try {
     console.log(`Unpinning cid ${req.params.cid}`);
     await node.pin.rm(req.params.cid, {
+      recursive: true
+    });
+    await goIPFS.pin.rm(req.params.cid, {
       recursive: true
     });
   } catch (_) {
