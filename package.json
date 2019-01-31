@@ -13,6 +13,7 @@
   "author": "Chance Hudson",
   "license": "MIT",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "ipfs-http-client": "^29.0.0"
   }
