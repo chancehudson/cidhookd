@@ -3,6 +3,9 @@ require('events').defaultMaxListeners = 20;
 const fs = require('fs');
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
+
+app.use(bodyParser.raw());
 
 const ipfsClient = require('ipfs-http-client');
 const goIPFS = ipfsClient('localhost', '5001', { protocol: 'http' });
@@ -27,6 +30,23 @@ app.use((req, res, next) => {
     next(new Error(`Invalid Authorization supplied: ${auth}`));
   } else {
     next();
+  }
+});
+
+app.post('/', async (req, res) => {
+  try {
+    const data = Buffer.from(req.body);
+    const result = await jsIPFS.add(data);
+    const cid = result[0].path;
+    console.log(`Added cid ${cid}`);
+    await goIPFS.add(data);
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify({
+      cid
+    }));
+    res.status(200).end();
+  } catch (err) {
+    res.status(500).send(err.toString());
   }
 });
 
